@@ -11,30 +11,34 @@ public class _01_RobotRace {
 		for (int i = 0; i < robots.length; i++) {
 			robots[i] = new Robot();
 			robots[i].miniaturize();
+			robots[i].setSpeed(100);
+			robots[i].penDown();
 		}
 		int robotY = 0;
-		int start = 0;
 		for (int i = 0; i < robots.length; i++) {
 			robots[i].moveTo(500, 15 * i + 5);
 			robots[i].setAngle(90);
 		}
-		Random random = new Random(50);
-		int[] ys = {start, start, start, start, start};
-		int highest = start;
-				while (highest > 1020) {
-					for (int i = 0; i < robots.length; i++) {
-						robotY = random.nextInt(50);
-						for (int j = 0; j < robotY; j++) {
-							robots[j].turn(1);
-							robots[j].move(i);
-						}
-						ys[i % 5] = ys[i % 5] - robotY;
-					}
-					for (int i = 0; i < ys.length; i++) {
-						if (ys[i] < highest) {
-							highest = ys[i];
-						}
-					}
+		Random random = new Random();
+		int[] ys = { 0, 0, 0, 0, 0 };
+		int highest = 0;
+		while (highest < 361) {
+			for (int i = 0; i < robots.length; i++) {
+				robotY = random.nextInt(50);
+				for (int j = 0; j < robotY; j++) {
+					robots[i].turn(1);
+					robots[i].move(5 - i);
+				}
+				ys[i] = ys[i] + robotY;
+			}
+			for (int i = 0; i < ys.length; i++) {
+				if (ys[i] > highest) {
+					highest = ys[i];
+				}
+			}
+		}
+		for (int i = 0; i < ys.length; i++) {
+			System.out.println(ys[i]);
 		}
 	}
 	// 2. create an array of 5 robots.
